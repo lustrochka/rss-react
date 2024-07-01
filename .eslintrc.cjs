@@ -4,11 +4,13 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:prettier/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', "react-compiler"],
+  plugins: ['react-refresh', "react-compiler", '@typescript-eslint', 'prettier'],
   rules: {
     "react-compiler/react-compiler": "error",
     '@typescript-eslint/no-explicit-any': 'error',
