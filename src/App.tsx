@@ -1,7 +1,7 @@
-import './App.css';
+import { Page } from './components/page';
 
 function App() {
-  return <div>A</div>;
+  return <Page />;
 }
 
 export default App;
