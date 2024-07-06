@@ -140,7 +140,7 @@ input {
   color: black;
 }
 
-.beer-container {
+.result-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, 250px);
   gap: 10px;
@@ -149,7 +149,7 @@ input {
   margin: 0 auto;
 }
 
-.beer-item {
+.result-item {
   padding: 0 10px 10px;
   border: 2px solid rgb(120, 120, 120);
   border-radius: 5px;

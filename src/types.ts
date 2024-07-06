@@ -3,3 +3,9 @@ export type SearchParams = {
   pageSize: number;
   name?: string;
 };
+
+export interface IResponseItem {
+  uid: number;
+  name: string;
+  astronomicalObjectType: string;
+}
