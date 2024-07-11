@@ -1,37 +1,30 @@
-import { Component } from 'react';
 import axios from 'axios';
 import { SearchParams } from '../types';
 import { Search } from './search';
 import { Loader } from './loader';
 import { SearchResults } from './searchResults';
 import '../App.scss';
+import { useState, useEffect } from 'react';
 
-export class Page extends Component {
-  state = {
-    results: [],
-    loadingClass: 'loading',
-    resClass: 'results hiding',
-    nothingClass: 'not-found hiding',
-    error: false,
+export function Page() {
+  const [results, setResults] = useState([]);
+  const [loadingClass, setLoadingClass] = useState('loading');
+  const [resClass, setResClass] = useState('results hiding');
+  const [nothingClass, setNothingClass] = useState('not-found hiding');
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    search(localStorage.getItem('searchString') || '');
+    if (error) throw new Error('This is an error');
+  }, []);
+
+  const load = () => {
+    setLoadingClass('loading');
+    setResClass('results hiding');
+    setNothingClass('not-found hiding');
   };
 
-  componentDidMount(): void {
-    this.search(localStorage.getItem('searchString') || '');
-  }
-
-  componentDidUpdate() {
-    if (this.state.error) throw new Error('This is an error');
-  }
-
-  load() {
-    this.setState({
-      loadingClass: 'loading',
-      resClass: 'results hiding',
-      nothingClass: 'not-found hiding',
-    });
-  }
-
-  search(searchString: string) {
+  const search = (searchString: string) => {
     const BASE_URL = 'http://stapi.co/api/v1/rest/astronomicalObject/search';
     const params: SearchParams = { pageNumber: 0, pageSize: 10 };
     if (searchString) params.name = searchString;
@@ -49,49 +42,40 @@ export class Page extends Component {
       )
       .then((res) => {
         if (res.data.astronomicalObjects.length > 0) {
-          this.setState({
-            loadingClass: 'loading hiding',
-            resClass: 'results',
-            nothingClass: 'not-found hiding',
-            results: res.data.astronomicalObjects,
-          });
+          setLoadingClass('loading hiding');
+          setResClass('results');
+          setNothingClass('not-found hiding');
+          setResults(res.data.astronomicalObjects);
         } else {
-          this.setState({
-            loadingClass: 'loading hiding',
-            nothingClass: 'not-found',
-          });
+          setLoadingClass('loading hiding');
+          setNothingClass('not-found');
         }
       });
-  }
+  };
 
-  render() {
-    return (
-      <>
-        <div className="top-section">
-          <button
-            className="error-button"
-            onClick={() => {
-              this.setState({ error: true });
-            }}
-          >
-            Make an error
-          </button>
-          <Search
-            callback={(searchString) => {
-              this.load();
-              this.search(searchString);
-            }}
-          />
-        </div>
-        <div className="bottom-section">
-          <Loader class={this.state.loadingClass} />
-          <h2 className={this.state.nothingClass}>Nothing found :(</h2>
-          <SearchResults
-            class={this.state.resClass}
-            data={this.state.results}
-          />
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <div className="top-section">
+        <button
+          className="error-button"
+          onClick={() => {
+            setError(true);
+          }}
+        >
+          Make an error
+        </button>
+        <Search
+          callback={(searchString) => {
+            load();
+            search(searchString);
+          }}
+        />
+      </div>
+      <div className="bottom-section">
+        <Loader class={loadingClass} />
+        <h2 className={nothingClass}>Nothing found :(</h2>
+        <SearchResults class={resClass} data={results} />
+      </div>
+    </>
+  );
 }
