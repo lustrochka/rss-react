@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useOutletContext, useSearchParams } from 'react-router-dom';
 import './details.scss';
 import { Loader } from '../loader';
 
-export function DetailedPage({ id }: { id: string }) {
+export function DetailedPage() {
+  const [id]: [id: string] = useOutletContext();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [name, setName] = useState('');
   const [type, setType] = useState('');
   const [location, setLocation] = useState('');
@@ -12,6 +15,12 @@ export function DetailedPage({ id }: { id: string }) {
   useEffect(() => {
     search();
   }, []);
+
+  const changeUrl = () => {
+    searchParams.delete('details');
+    setSearchParams(searchParams);
+  };
+
   const search = () => {
     const BASE_URL = 'http://stapi.co/api/v1/rest/astronomicalObject';
     axios
@@ -33,6 +42,9 @@ export function DetailedPage({ id }: { id: string }) {
 
   return (
     <div className="details">
+      <div className="close-button" onClick={changeUrl}>
+        ✖
+      </div>
       <div className="details-item">
         {isLoading && <Loader class="loading" />}
         <h2>{name}</h2>

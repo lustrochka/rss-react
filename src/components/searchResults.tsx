@@ -1,4 +1,5 @@
 import { IResponseItem } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 interface IMyProps {
   class: string;
@@ -6,11 +7,23 @@ interface IMyProps {
 }
 
 export function SearchResults(props: IMyProps) {
+  const navigate = useNavigate();
+  const goToItem = (id: number) => {
+    navigate({
+      pathname: '/',
+      search: `?details=${id}`,
+    });
+  };
+
   return (
     <div className={props.class}>
       <div className="result-container">
         {props.data.map((item: IResponseItem) => (
-          <div key={item.uid.toString()} className="result-item">
+          <div
+            key={item.uid.toString()}
+            className="result-item"
+            onClick={() => goToItem(item.uid)}
+          >
             <h3>{item.name}</h3>
             <div>type: {item.astronomicalObjectType}</div>
           </div>

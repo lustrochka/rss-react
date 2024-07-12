@@ -5,8 +5,10 @@ import { Loader } from './loader';
 import { SearchResults } from './searchResults';
 import '../App.scss';
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export function Page() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [results, setResults] = useState([]);
   const [loadingClass, setLoadingClass] = useState('loading');
   const [resClass, setResClass] = useState('results hiding');
@@ -22,6 +24,13 @@ export function Page() {
     setLoadingClass('loading');
     setResClass('results hiding');
     setNothingClass('not-found hiding');
+  };
+
+  const changeUrl = () => {
+    if (searchParams.get('details')) {
+      searchParams.delete('details');
+      setSearchParams(searchParams);
+    }
   };
 
   const search = (searchString: string) => {
@@ -55,26 +64,28 @@ export function Page() {
 
   return (
     <>
-      <div className="top-section">
-        <button
-          className="error-button"
-          onClick={() => {
-            setError(true);
-          }}
-        >
-          Make an error
-        </button>
-        <Search
-          callback={(searchString) => {
-            load();
-            search(searchString);
-          }}
-        />
-      </div>
-      <div className="bottom-section">
-        <Loader class={loadingClass} />
-        <h2 className={nothingClass}>Nothing found :(</h2>
-        <SearchResults class={resClass} data={results} />
+      <div className="main-page" onClick={changeUrl}>
+        <div className="top-section">
+          <button
+            className="error-button"
+            onClick={() => {
+              setError(true);
+            }}
+          >
+            Make an error
+          </button>
+          <Search
+            callback={(searchString) => {
+              load();
+              search(searchString);
+            }}
+          />
+        </div>
+        <div className="bottom-section">
+          <Loader class={loadingClass} />
+          <h2 className={nothingClass}>Nothing found :(</h2>
+          <SearchResults class={resClass} data={results} />
+        </div>
       </div>
     </>
   );
