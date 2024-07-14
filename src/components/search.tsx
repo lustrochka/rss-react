@@ -1,5 +1,4 @@
 import { useSearchParams } from 'react-router-dom';
-import searchUrl from '../assets/drawing-2.svg';
 import useSearchQuery from '../hooks/useSearchQuery';
 
 interface IMyProps {
@@ -27,9 +26,7 @@ export function Search(props: IMyProps) {
             setSearchParams({ page: '0' });
             props.callback(getSearchString());
           }}
-        >
-          <img src={searchUrl}></img>
-        </div>
+        ></div>
       </div>
     </div>
   );

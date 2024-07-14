@@ -105,10 +105,11 @@ input {
 
 .loupe {
   width: 20px;
+  height: 30px;
   margin: 5px 8px 0;
-  img {
-    width: 100%;
-  }
+  background-image: url('../src/assets/drawing-2.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
   &:hover {
     cursor: pointer;
   }
