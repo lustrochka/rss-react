@@ -1,5 +1,5 @@
 import { IResponseItem } from '../types';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 interface IMyProps {
   class: string;
@@ -7,12 +7,9 @@ interface IMyProps {
 }
 
 export function SearchResults(props: IMyProps) {
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
   const goToItem = (id: number) => {
-    navigate({
-      pathname: '/',
-      search: `?details=${id}`,
-    });
+    setSearchParams({ details: `${id}` });
   };
 
   return (

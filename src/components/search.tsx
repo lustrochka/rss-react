@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom';
 import searchUrl from '../assets/drawing-2.svg';
 import useSearchQuery from '../hooks/useSearchQuery';
 
@@ -6,7 +7,8 @@ interface IMyProps {
 }
 
 export function Search(props: IMyProps) {
-  const [searchString, setSearchString, saveSearchString] = useSearchQuery();
+  const [getSearchString, setSearchString, saveSearchString] = useSearchQuery();
+  const [, setSearchParams] = useSearchParams();
 
   return (
     <div className="search-block">
@@ -14,7 +16,7 @@ export function Search(props: IMyProps) {
       <div className="search">
         <input
           type="search"
-          value={searchString}
+          value={getSearchString()}
           className="search-input"
           onChange={(event) => setSearchString(event.target.value.trim())}
         ></input>
@@ -22,7 +24,8 @@ export function Search(props: IMyProps) {
           className="loupe"
           onClick={() => {
             saveSearchString();
-            props.callback(searchString);
+            setSearchParams({ page: '0' });
+            props.callback(getSearchString());
           }}
         >
           <img src={searchUrl}></img>

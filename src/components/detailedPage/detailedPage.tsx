@@ -14,7 +14,7 @@ export function DetailedPage() {
 
   useEffect(() => {
     search();
-  }, []);
+  }, [searchParams]);
 
   const changeUrl = () => {
     searchParams.delete('details');

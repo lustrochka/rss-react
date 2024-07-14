@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function useSearchQuery(): [
-  string,
+  () => string,
   React.Dispatch<React.SetStateAction<string>>,
   () => void,
 ] {
@@ -9,5 +9,6 @@ export default function useSearchQuery(): [
     return localStorage.getItem('searchString') || '';
   });
   const saveToStorage = () => localStorage.setItem('searchString', query);
-  return [query, setQuery, saveToStorage];
+  const getQuery = () => query;
+  return [getQuery, setQuery, saveToStorage];
 }

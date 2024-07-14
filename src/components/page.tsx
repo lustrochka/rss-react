@@ -3,6 +3,7 @@ import { SearchParams } from '../types';
 import { Search } from './search';
 import { Loader } from './loader';
 import { SearchResults } from './searchResults';
+import Pagination from './pagination';
 import '../App.scss';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -15,12 +16,17 @@ export function Page() {
   const [resClass, setResClass] = useState('results hiding');
   const [nothingClass, setNothingClass] = useState('not-found hiding');
   const [error, setError] = useState(false);
-  const [query] = useSearchQuery();
+  const [getQuery] = useSearchQuery();
+  const page = Number(searchParams.get('page')) - 1;
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   useEffect(() => {
-    search(query);
     if (error) throw new Error('This is an error');
-  }, []);
+    setIsLoaded(false);
+    load();
+    search(getQuery());
+  }, [page]);
 
   const load = () => {
     setLoadingClass('loading');
@@ -37,7 +43,7 @@ export function Page() {
 
   const search = (searchString: string) => {
     const BASE_URL = 'http://stapi.co/api/v1/rest/astronomicalObject/search';
-    const params: SearchParams = { pageNumber: 0, pageSize: 10 };
+    const params: SearchParams = { pageNumber: page, pageSize: 10 };
     if (searchString) params.name = searchString;
     axios
       .post(
@@ -57,6 +63,8 @@ export function Page() {
           setResClass('results');
           setNothingClass('not-found hiding');
           setResults(res.data.astronomicalObjects);
+          setIsLastPage(res.data.page.lastPage);
+          setIsLoaded(true);
         } else {
           setLoadingClass('loading hiding');
           setNothingClass('not-found');
@@ -87,6 +95,7 @@ export function Page() {
           <Loader class={loadingClass} />
           <h2 className={nothingClass}>Nothing found :(</h2>
           <SearchResults class={resClass} data={results} />
+          {isLoaded && <Pagination isLast={isLastPage} />}
         </div>
       </div>
     </>
