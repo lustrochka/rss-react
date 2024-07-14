@@ -1,14 +1,12 @@
 import searchUrl from '../assets/drawing-2.svg';
-import { useState } from 'react';
+import useSearchQuery from '../hooks/useSearchQuery';
 
 interface IMyProps {
   callback: (searchString: string) => void;
 }
 
 export function Search(props: IMyProps) {
-  const [searchString, setSearchString] = useState(
-    localStorage.getItem('searchString') || ''
-  );
+  const [searchString, setSearchString, saveSearchString] = useSearchQuery();
 
   return (
     <div className="search-block">
@@ -23,7 +21,7 @@ export function Search(props: IMyProps) {
         <div
           className="loupe"
           onClick={() => {
-            localStorage.setItem('searchString', searchString);
+            saveSearchString();
             props.callback(searchString);
           }}
         >

@@ -6,6 +6,7 @@ import { SearchResults } from './searchResults';
 import '../App.scss';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import useSearchQuery from '../hooks/useSearchQuery';
 
 export function Page() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,9 +15,10 @@ export function Page() {
   const [resClass, setResClass] = useState('results hiding');
   const [nothingClass, setNothingClass] = useState('not-found hiding');
   const [error, setError] = useState(false);
+  const [query] = useSearchQuery();
 
   useEffect(() => {
-    search(localStorage.getItem('searchString') || '');
+    search(query);
     if (error) throw new Error('This is an error');
   }, []);
 
