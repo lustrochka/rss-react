@@ -141,7 +141,8 @@ input {
 }
 
 .bubble {
-  width: 100%;
+  background-image: url('../src/assets/PIWO.svg');
+  background-size: contain;
 }
 
 .not-found {
