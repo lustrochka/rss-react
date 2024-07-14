@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SearchParams } from '../types';
 import { Search } from './search';
 import { Loader } from './loader';
-import { SearchResults } from './searchResults';
+import { CardList } from './cardList';
 import Pagination from './pagination';
 import '../App.scss';
 import { useState, useEffect } from 'react';
@@ -14,7 +14,6 @@ export function Page() {
   const [results, setResults] = useState([]);
   const [loadingClass, setLoadingClass] = useState('loading');
   const [resClass, setResClass] = useState('results hiding');
-  const [nothingClass, setNothingClass] = useState('not-found hiding');
   const [error, setError] = useState(false);
   const [getQuery] = useSearchQuery();
   const page = Number(searchParams.get('page')) - 1;
@@ -31,7 +30,6 @@ export function Page() {
   const load = () => {
     setLoadingClass('loading');
     setResClass('results hiding');
-    setNothingClass('not-found hiding');
   };
 
   const changeUrl = () => {
@@ -58,17 +56,11 @@ export function Page() {
         }
       )
       .then((res) => {
-        if (res.data.astronomicalObjects.length > 0) {
-          setLoadingClass('loading hiding');
-          setResClass('results');
-          setNothingClass('not-found hiding');
-          setResults(res.data.astronomicalObjects);
-          setIsLastPage(res.data.page.lastPage);
-          setIsLoaded(true);
-        } else {
-          setLoadingClass('loading hiding');
-          setNothingClass('not-found');
-        }
+        setLoadingClass('loading hiding');
+        setResClass('results');
+        setResults(res.data.astronomicalObjects);
+        setIsLastPage(res.data.page.lastPage);
+        setIsLoaded(true);
       });
   };
 
@@ -93,8 +85,7 @@ export function Page() {
         </div>
         <div className="bottom-section">
           <Loader class={loadingClass} />
-          <h2 className={nothingClass}>Nothing found :(</h2>
-          <SearchResults class={resClass} data={results} />
+          <CardList class={resClass} data={results} />
           {isLoaded && <Pagination isLast={isLastPage} />}
         </div>
       </div>
