@@ -4,10 +4,6 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { CardList } from '../components/cardList';
 import { IResponseItem } from '../types';
 
-/*const searchString = '';
-const setSearchString = jest.fn();
-const setBeers = jest.fn();*/
-
 describe('CardList', () => {
   it('renders the specified number of cards', () => {
     const results: IResponseItem[] = [

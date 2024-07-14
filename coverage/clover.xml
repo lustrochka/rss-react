@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1720977838073" clover="3.2.0">
-  <project timestamp="1720977838073" name="All files">
+<coverage generated="1720978591572" clover="3.2.0">
+  <project timestamp="1720978591572" name="All files">
     <metrics statements="29" coveredstatements="27" conditionals="4" coveredconditionals="4" methods="12" coveredmethods="10" elements="45" coveredelements="41" complexity="0" loc="29" ncloc="29" packages="2" files="4" classes="4"/>
     <package name="components">
       <metrics statements="22" coveredstatements="20" conditionals="2" coveredconditionals="2" methods="8" coveredmethods="6"/>
       <file name="card.tsx" path="C:\Users\30051441\rss-react\src\components\card.tsx">
         <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
       </file>
       <file name="cardList.tsx" path="C:\Users\30051441\rss-react\src\components\cardList.tsx">
