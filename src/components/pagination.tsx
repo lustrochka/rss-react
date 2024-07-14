@@ -18,6 +18,7 @@ export default function Pagination(props: IMyProps) {
     <>
       <div className="pagination">
         <div
+          className="prev-button"
           onClick={() => {
             if (page !== 1) decreasePage();
           }}
@@ -26,6 +27,7 @@ export default function Pagination(props: IMyProps) {
         </div>
         <div>{page}</div>
         <div
+          className="next-button"
           onClick={() => {
             if (!props.isLast) increasePage();
           }}

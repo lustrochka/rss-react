@@ -24,6 +24,7 @@ describe('CardList', () => {
       results.length
     );
   });
+
   it('message is displayed if no cards are present', () => {
     const results: IResponseItem[] = [];
     render(
