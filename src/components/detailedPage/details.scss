@@ -1,0 +1,26 @@
+.details {
+  width: 50%;
+  height: 100vh;
+  text-align: center;
+  background-color: rgb(205, 192, 141);
+  padding: 60px 10px;
+}
+
+.details-item {
+  border: 5px double black;
+}
+
+.beer-image {
+  width: 90px;
+}
+
+.close-button {
+  color: black;
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
