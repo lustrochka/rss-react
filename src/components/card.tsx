@@ -2,7 +2,6 @@ import { IResponseItem } from '../types';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { useState } from 'react';
 import { setSelected } from '../store/slices/selectedSlice';
 
 interface IMyProps {
@@ -16,9 +15,6 @@ export default function Card(props: IMyProps) {
     (state: RootState) => state.selected.selected
   );
   const selectedItemsCopy = new Set(selectedItems);
-  const [checked, setChecked] = useState(
-    selectedItems.includes(props.data.uid)
-  );
 
   const onClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (e.target instanceof HTMLElement) {
@@ -34,7 +30,6 @@ export default function Card(props: IMyProps) {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
     e.target.checked
       ? selectedItemsCopy.add(props.data.uid)
       : selectedItemsCopy.delete(props.data.uid);
@@ -48,7 +43,7 @@ export default function Card(props: IMyProps) {
       <input
         type="checkbox"
         className="card-checkbox"
-        checked={checked}
+        checked={selectedItems.includes(props.data.uid)}
         onChange={(e) => handleChange(e)}
       ></input>
     </div>

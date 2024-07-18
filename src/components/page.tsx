@@ -8,7 +8,7 @@ import '../App.scss';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import useSearchQuery from '../hooks/useSearchQuery';
-import Flayout from './flayout/flayout';
+import Flyout from './flyout/flyout';
 
 export function Page() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -89,7 +89,7 @@ export function Page() {
           <Loader class={loadingClass} />
           <CardList class={resClass} data={results} />
           {isLoaded && <Pagination isLast={isLastPage} />}
-          <Flayout></Flayout>
+          <Flyout></Flyout>
         </div>
       </div>
     </>
