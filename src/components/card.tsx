@@ -1,11 +1,11 @@
-import { IResponseItem } from '../types';
+import { IAstronomicalObject } from '../types';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { setSelected } from '../store/slices/selectedSlice';
 
 interface IMyProps {
-  data: IResponseItem;
+  data: IAstronomicalObject;
 }
 
 export default function Card(props: IMyProps) {

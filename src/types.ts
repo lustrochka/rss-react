@@ -4,8 +4,17 @@ export type SearchParams = {
   name?: string;
 };
 
-export interface IResponseItem {
+export interface IObjectsResponse {
+  astronomicalObjects: IAstronomicalObject[];
+}
+
+export interface IAstronomicalObject {
   uid: number;
   name: string;
   astronomicalObjectType: string;
+}
+
+export interface RequestSearchParams {
+  pageNumber: number;
+  searchString?: string;
 }

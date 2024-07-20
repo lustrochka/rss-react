@@ -1,19 +1,19 @@
-import { IResponseItem } from '../types';
+import { IAstronomicalObject } from '../types';
 import Card from './card';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
-interface IMyProps {
-  class: string;
-  data: IResponseItem[];
-}
-
-export function CardList(props: IMyProps) {
-  const nothingClass = props.data.length > 0 ? 'nothing hiding' : 'nothing';
+export function CardList() {
+  //const nothingClass = props.data.length > 0 ? 'nothing hiding' : 'nothing';
+  const objectsData: IAstronomicalObject[] = useSelector(
+    (state: RootState) => state.objects.objects
+  );
   return (
     <>
-      <div className={props.class}>
-        <h2 className={nothingClass}>Nothing found :(</h2>
+      <div className="results">
+        {objectsData.length === 0 && <h2 className="">Nothing found</h2>}
         <div className="result-container">
-          {props.data.map((item: IResponseItem) => (
+          {objectsData.map((item: IAstronomicalObject) => (
             <Card key={item.uid.toString()} data={item} />
           ))}
         </div>

@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { SearchParams } from '../types';
 import { Search } from './search';
 import { Loader } from './loader';
 import { CardList } from './cardList';
@@ -7,30 +5,22 @@ import Pagination from './pagination';
 import '../App.scss';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import useSearchQuery from '../hooks/useSearchQuery';
 import Flyout from './flyout/flyout';
 
 export function Page() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [results, setResults] = useState([]);
   const [loadingClass, setLoadingClass] = useState('loading');
-  const [resClass, setResClass] = useState('results hiding');
   const [error, setError] = useState(false);
-  const [query, setQuery] = useSearchQuery();
+  const [isLastPage] = useState(false);
   const page = Number(searchParams.get('page')) - 1 || 0;
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isLastPage, setIsLastPage] = useState(false);
 
   useEffect(() => {
     if (error) throw new Error('This is an error');
-    setIsLoaded(false);
     load();
-    search(query);
   }, [page]);
 
   const load = () => {
     setLoadingClass('loading');
-    setResClass('results hiding');
   };
 
   const changeUrl = () => {
@@ -40,7 +30,7 @@ export function Page() {
     }
   };
 
-  const search = (searchString: string) => {
+  /*const search = (searchString: string) => {
     const BASE_URL = 'http://stapi.co/api/v1/rest/astronomicalObject/search';
     const params: SearchParams = { pageNumber: page, pageSize: 10 };
     if (searchString) params.name = searchString;
@@ -58,12 +48,9 @@ export function Page() {
       )
       .then((res) => {
         setLoadingClass('loading hiding');
-        setResClass('results');
-        setResults(res.data.astronomicalObjects);
         setIsLastPage(res.data.page.lastPage);
-        setIsLoaded(true);
       });
-  };
+  };*/
 
   return (
     <>
@@ -77,18 +64,12 @@ export function Page() {
           >
             Make an error
           </button>
-          <Search
-            callback={(searchString) => {
-              load();
-              setQuery(searchString);
-              search(searchString);
-            }}
-          />
+          <Search />
         </div>
         <div className="bottom-section">
           <Loader class={loadingClass} />
-          <CardList class={resClass} data={results} />
-          {isLoaded && <Pagination isLast={isLastPage} />}
+          <CardList />
+          <Pagination isLast={isLastPage} />
           <Flyout></Flyout>
         </div>
       </div>
