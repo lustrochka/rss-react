@@ -5,7 +5,21 @@ export type SearchParams = {
 };
 
 export interface IObjectsResponse {
+  page: { lastPage: boolean };
   astronomicalObjects: IAstronomicalObject[];
+}
+
+export interface IObjectResponse {
+  astronomicalObject: {
+    name: string;
+    astronomicalObjectType: string;
+    location?: {
+      name: string;
+      location: {
+        name: string;
+      };
+    };
+  };
 }
 
 export interface IAstronomicalObject {

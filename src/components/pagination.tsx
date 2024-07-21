@@ -1,12 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
-interface IMyProps {
-  isLast: boolean;
-}
-
-export default function Pagination(props: IMyProps) {
+export default function Pagination() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
+  const isLast = useSelector((state: RootState) => state.isLast.isLast);
   const increasePage = () => {
     setSearchParams({ page: `${page + 1}` });
   };
@@ -29,7 +28,7 @@ export default function Pagination(props: IMyProps) {
         <div
           className="next-button"
           onClick={() => {
-            if (!props.isLast) increasePage();
+            if (!isLast) increasePage();
           }}
         >
           🠚
