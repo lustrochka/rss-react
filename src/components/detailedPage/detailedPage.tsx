@@ -20,6 +20,7 @@ export function DetailedPage() {
       </div>
       <div className="details-item">
         {isLoading && <Loader />}
+        {error && <div>Something went wrong...</div>}
         {data && (
           <>
             <h2>{data.astronomicalObject.name}</h2>

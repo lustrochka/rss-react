@@ -32,3 +32,11 @@ export interface RequestSearchParams {
   pageNumber: number;
   searchString?: string;
 }
+
+export interface ISelectedItems {
+  [id: string]: {
+    name: string;
+    type: string;
+    location?: string;
+  };
+}
