@@ -1,6 +1,6 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
 import './details.scss';
-import { Loader } from '../loader';
+import { Loader } from '../loader/loader';
 import { useGetObjectQuery } from '../../api/api';
 
 export function DetailedPage() {

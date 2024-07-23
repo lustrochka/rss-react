@@ -1,11 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
-import useSearchQuery from '../hooks/useSearchQuery';
-import { useGetObjectsMutation } from '../api/api';
+import useSearchQuery from '../../hooks/useSearchQuery';
+import { useGetObjectsMutation } from '../../api/api';
 import { useDispatch } from 'react-redux';
-import { setObjects } from '../store/slices/objectsSlice';
-import { setIsLoading } from '../store/slices/isLoadingSlice';
-import { setIsLast } from '../store/slices/isLastSlice';
+import { setObjects } from '../../store/slices/objectsSlice';
+import { setIsLoading } from '../../store/slices/isLoadingSlice';
+import { setIsLast } from '../../store/slices/isLastSlice';
 import { useEffect } from 'react';
+import './search.scss';
 
 export function Search() {
   const [searchString, setSearchString, saveSearchString] = useSearchQuery();

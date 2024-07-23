@@ -28,16 +28,18 @@ export default function Flyout() {
     <>
       {Object.keys(selectedItems).length > 0 && (
         <div className="flyout">
-          <h3>
+          <h3 className="flyout__title">
             {Object.keys(selectedItems).length} item
             {Object.keys(selectedItems).length > 1 && 's'} selected
           </h3>
-          <button onClick={() => dispatch(setSelected([]))}>
-            Unselect all
-          </button>
-          <a href={downloadCSV()} download="astronomical objects.csv">
-            <button>Download</button>
-          </a>
+          <div className="flyout__buttons">
+            <button onClick={() => dispatch(setSelected([]))}>
+              Unselect all
+            </button>
+            <a href={downloadCSV()} download="astronomical objects.csv">
+              <button>Download</button>
+            </a>
+          </div>
         </div>
       )}
     </>

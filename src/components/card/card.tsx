@@ -1,10 +1,11 @@
-import { IAstronomicalObject, ISelectedItems } from '../types';
+import { IAstronomicalObject, ISelectedItems } from '../../types';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { setSelected } from '../store/slices/selectedSlice';
+import { RootState } from '../../store/store';
+import { setSelected } from '../../store/slices/selectedSlice';
 import { useEffect, useState } from 'react';
-import { useGetObjectQuery } from '../api/api';
+import { useGetObjectQuery } from '../../api/api';
+import './card.scss';
 
 interface IMyProps {
   data: IAstronomicalObject;

@@ -1,6 +1,6 @@
 import { Layout } from './components/layout';
 import { DetailedPage } from './components/detailedPage/detailedPage';
-import NotFound from './components/404';
+import NotFound from './components/404/404';
 import {
   createBrowserRouter,
   createRoutesFromElements,

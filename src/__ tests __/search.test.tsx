@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { Search } from '../components/search';
+import { Search } from '../components/search/search';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 

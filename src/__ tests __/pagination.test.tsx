@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import Pagination from '../components/pagination';
+import Pagination from '../components/pagination/pagination';
 import userEvent from '@testing-library/user-event';
 
 describe('CardList', () => {

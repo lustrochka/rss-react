@@ -1,12 +1,12 @@
-import { Search } from './search';
-import { CardList } from './cardList';
-import Pagination from './pagination';
+import { Search } from '../search/search';
+import { CardList } from '../cardList/cardList';
+import Pagination from '../pagination/pagination';
 import { useSearchParams } from 'react-router-dom';
-import Flyout from './flyout/flyout';
+import Flyout from '../flyout/flyout';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { Loader } from './loader';
-import '../App.scss';
+import { RootState } from '../../store/store';
+import { Loader } from '../loader/loader';
+import './page.scss';
 
 export function Page() {
   const [searchParams, setSearchParams] = useSearchParams();

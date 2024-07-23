@@ -1,0 +1,23 @@
+.loading {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  width: 150px;
+  margin: 0 auto 40px;
+  div {
+    width: 15px;
+    margin-right: 15px;
+    height: 15px;
+    animation: loading linear 1.6s infinite;
+  }
+  @for $i from 1 through 5 {
+    div:nth-child(#{$i}) {
+      animation-delay: 0 + 0.2s * ($i - 1);
+    }
+  }
+}
+
+.bubble {
+  background-image: url('../src/assets/PIWO.svg');
+  background-size: contain;
+}

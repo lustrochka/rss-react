@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Page } from './page';
+import { Page } from './page/page';
 import { useSearchParams } from 'react-router-dom';
 import { ErrorBoundary } from './errorBoundary';
 import { Provider } from 'react-redux';

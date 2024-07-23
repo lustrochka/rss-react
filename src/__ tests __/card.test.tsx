@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import Card from '../components/card';
+import Card from '../components/card/card';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { waitFor } from '@testing-library/react';

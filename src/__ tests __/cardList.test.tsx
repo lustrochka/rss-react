@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { CardList } from '../components/cardList';
+import { CardList } from '../components/cardList/cardList';
 import { IResponseItem } from '../types';
 
 describe('CardList', () => {

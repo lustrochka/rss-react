@@ -1,7 +1,8 @@
-import { IAstronomicalObject } from '../types';
-import Card from './card';
+import { IAstronomicalObject } from '../../types';
+import Card from '../card/card';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { RootState } from '../../store/store';
+import './cardList.scss';
 
 export function CardList() {
   const objectsData: IAstronomicalObject[] = useSelector(
