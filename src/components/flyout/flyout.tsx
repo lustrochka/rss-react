@@ -10,6 +10,20 @@ export default function Flyout() {
     (state: RootState) => state.selected.selected
   );
 
+  const convertToCSV = () => {
+    const keys = Object.keys(Object.values(selectedItems)[0]).join(',');
+    const values = Object.values(selectedItems).map((item) =>
+      Object.values(item).join(',')
+    );
+    return [keys, ...values].join('\n');
+  };
+
+  const downloadCSV = () => {
+    const csv = convertToCSV();
+    const blob = new Blob([csv], { type: 'text/csv' });
+    return URL.createObjectURL(blob);
+  };
+
   return (
     <>
       {Object.keys(selectedItems).length > 0 && (
@@ -21,7 +35,9 @@ export default function Flyout() {
           <button onClick={() => dispatch(setSelected([]))}>
             Unselect all
           </button>
-          <button onClick={() => console.log(selectedItems)}>Download</button>
+          <a href={downloadCSV()} download="astronomical objects.csv">
+            <button>Download</button>
+          </a>
         </div>
       )}
     </>
