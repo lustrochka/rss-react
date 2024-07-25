@@ -6,9 +6,13 @@ import Flyout from '../flyout/flyout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { Loader } from '../loader/loader';
+import ThemeButton from '../themeButton/themeButton';
+import { useContext } from 'react';
+import ThemeContext from '../../context/themeContext';
 import './page.scss';
 
 export function Page() {
+  const { theme } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const isLoading: boolean = useSelector(
     (state: RootState) => state.isLoading.isLoading
@@ -23,9 +27,13 @@ export function Page() {
 
   return (
     <>
-      <div className="main-page" onClick={changeUrl}>
+      <div
+        className={theme === 'light' ? 'main-page light' : 'main-page'}
+        onClick={changeUrl}
+      >
         <div className="top-section">
           <Search />
+          <ThemeButton></ThemeButton>
         </div>
         <div className="bottom-section">
           {isLoading && <Loader />}

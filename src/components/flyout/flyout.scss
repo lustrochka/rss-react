@@ -17,3 +17,14 @@
   display: flex;
   justify-content: space-between;
 }
+
+.light {
+  .flyout {
+    background-color: white;
+    color: black;
+  }
+
+  button {
+    background-color: #cac7c7;
+  }
+}
