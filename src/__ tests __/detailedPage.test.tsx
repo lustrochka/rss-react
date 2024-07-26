@@ -2,17 +2,21 @@ import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { DetailedPage } from '../components/detailedPage/detailedPage';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import axios from 'axios';
+import { store } from '../store/store';
+import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
+import { server } from './mocks/server';
 
-jest.mock('axios');
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useOutletContext: () => ['1'],
 }));
 
-(axios.get as jest.Mock).mockResolvedValue({
+/*(axios.get as jest.Mock).mockResolvedValue({
   data: {
     astronomicalObject: {
       uid: 'ASMA0000289027',
@@ -30,14 +34,16 @@ jest.mock('react-router-dom', () => ({
       astronomicalObjects: [],
     },
   },
-});
+});*/
 
 const { container } = render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="*" element={<DetailedPage />}></Route>
-    </Routes>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<DetailedPage />}></Route>
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 );
 
 describe('DetailedPage', () => {
