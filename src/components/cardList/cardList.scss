@@ -1,0 +1,13 @@
+.not-found {
+  text-align: center;
+  color: black;
+}
+
+.result-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 250px);
+  gap: 10px;
+  justify-content: space-evenly;
+  width: 95%;
+  margin: 0 auto;
+}
