@@ -16,26 +16,6 @@ jest.mock('react-router-dom', () => ({
   useOutletContext: () => ['1'],
 }));
 
-/*(axios.get as jest.Mock).mockResolvedValue({
-  data: {
-    astronomicalObject: {
-      uid: 'ASMA0000289027',
-      name: '1 Centauri',
-      astronomicalObjectType: 'STAR_SYSTEM',
-      location: {
-        uid: 'ASMA0000002015',
-        name: 'Beta Quadrant',
-        astronomicalObjectType: null,
-        location: {
-          uid: 'ASMA0000002775',
-          name: 'Milky Way Galaxy',
-        },
-      },
-      astronomicalObjects: [],
-    },
-  },
-});*/
-
 const { container } = render(
   <Provider store={store}>
     <BrowserRouter>
