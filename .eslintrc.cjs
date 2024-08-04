@@ -2,13 +2,15 @@ module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
+    'next',
+    'next/core-web-vitals',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'test.environment.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'test.environment.cjs', 'next-env.d.ts'],
   parser: '@typescript-eslint/parser',
   plugins: [
     'react-refresh',
