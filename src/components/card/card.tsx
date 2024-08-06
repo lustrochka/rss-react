@@ -1,19 +1,24 @@
 import { IAstronomicalObject, ISelectedItems } from '../../types';
-import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { RootState } from '../../store/store';
 import { setSelected } from '../../store/slices/selectedSlice';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useGetObjectQuery } from '../../api/api';
-import './card.scss';
+import { useSetQuery } from '../../hooks/useSetQuery';
+import ThemeContext from '../../context/themeContext';
+import React from 'react';
+import styles from './card.module.scss';
 
 interface IMyProps {
   data: IAstronomicalObject;
 }
 
 export default function Card(props: IMyProps) {
+  const { theme } = useContext(ThemeContext);
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const router = useRouter();
+  const setQuery = useSetQuery();
   const selectedItems: ISelectedItems = useSelector(
     (state: RootState) => state.selected.selected
   );
@@ -29,15 +34,16 @@ export default function Card(props: IMyProps) {
 
   const onClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (e.target instanceof HTMLElement) {
-      if (!e.target.classList.contains('card-checkbox'))
+      if (!e.target.classList.contains(styles.cardCheckbox))
         goToItem(props.data.uid);
     }
   };
 
   const goToItem = (id: number) => {
-    const newSearchParams = new URLSearchParams(searchParams);
+    const query = router.asPath.split('?')[1];
+    const newSearchParams = new URLSearchParams(query);
     newSearchParams.set('details', `${id}`);
-    setSearchParams(newSearchParams);
+    setQuery(newSearchParams);
   };
 
   const changeSelectedItems = () => {
@@ -67,12 +73,19 @@ export default function Card(props: IMyProps) {
   };
 
   return (
-    <div className="result-item" onClick={(e) => onClick(e)}>
+    <div
+      className={
+        theme === 'light'
+          ? `${styles.resultItem} ${styles.resultItem_light}`
+          : styles.resultItem
+      }
+      onClick={(e) => onClick(e)}
+    >
       <h3>{props.data.name}</h3>
       <div>type: {props.data.astronomicalObjectType}</div>
       <input
         type="checkbox"
-        className="card-checkbox"
+        className={styles.cardCheckbox}
         checked={props.data.uid in selectedItems}
         onChange={(e) => handleChange(e)}
       ></input>

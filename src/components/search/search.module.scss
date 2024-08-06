@@ -1,4 +1,4 @@
-.search-block {
+.searchBlock {
   width: 250px;
   margin: 0 auto;
   color: white;
@@ -13,7 +13,7 @@
   border: solid 2px #fddd32;
 }
 
-.search-input {
+.searchInput {
   color: white;
   border: none;
   background-color: rgb(70, 70, 70);
@@ -32,11 +32,9 @@
   }
 }
 
-.light {
-  .search-block {
-    color: black;
-  }
-  .search {
-    border: none;
-  }
+.searchBlock_light {
+  color: black;
+}
+.search_light {
+  border: none;
 }

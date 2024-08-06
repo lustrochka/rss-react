@@ -1,13 +1,18 @@
 import { useContext } from 'react';
 import ThemeContext from '../../context/themeContext';
-import './themeButton.scss';
+import React from 'react';
+import styles from './themeButton.module.scss';
 
 export default function ThemeButton() {
   const { toggleTheme } = useContext(ThemeContext);
   return (
     <>
-      <label className="theme-label" htmlFor="theme-input">
-        <input type="checkbox" id="theme-input" onChange={toggleTheme}></input>
+      <label className={styles.themeLabel} htmlFor={styles.themeInput}>
+        <input
+          type="checkbox"
+          id={styles.themeInput}
+          onChange={toggleTheme}
+        ></input>
       </label>
     </>
   );

@@ -1,29 +1,25 @@
-.page {
-  display: flex;
-}
-
-.main-page {
+.mainPage {
   width: 100%;
 }
 
-.top-section {
+.topSection {
   padding: 30px;
   background-color: #1a1a1a;
   position: relative;
 }
 
-.bottom-section {
+.bottomSection {
   background-color: #bf7232;
   height: 100vh;
   padding-top: 20px;
 }
 
 .light {
-  .top-section {
+  .topSection {
     background-color: white;
   }
 
-  .bottom-section {
+  .bottomSection {
     background-color: #afdffa;
   }
 }

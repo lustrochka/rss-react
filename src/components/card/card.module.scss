@@ -1,4 +1,4 @@
-.result-item {
+.resultItem {
   padding: 0 10px 10px;
   border: 2px solid rgb(120, 120, 120);
   border-radius: 5px;
@@ -7,14 +7,14 @@
   position: relative;
 }
 
-.card-checkbox {
+.cardCheckbox {
   position: absolute;
   top: 10px;
   right: 10px;
   visibility: hidden;
 }
 
-.card-checkbox::before {
+.cardCheckbox::before {
   content: '✓';
   flex-wrap: wrap;
   display: flex;
@@ -31,13 +31,11 @@
   font-size: 12px;
 }
 
-.card-checkbox:checked::before {
+.cardCheckbox:checked::before {
   background-color: #213547;
   color: white;
 }
 
-.light {
-  .result-item {
-    background-color: #3290bf;
-  }
+.resultItem_light {
+  background-color: #3290bf;
 }

@@ -10,7 +10,12 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'test.environment.cjs', 'next-env.d.ts'],
+  ignorePatterns: [
+    'dist',
+    '.eslintrc.cjs',
+    'test.environment.cjs',
+    'next-env.d.ts',
+  ],
   parser: '@typescript-eslint/parser',
   plugins: [
     'react-refresh',

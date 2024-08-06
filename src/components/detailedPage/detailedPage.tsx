@@ -1,24 +1,32 @@
-import { useOutletContext, useSearchParams } from 'react-router-dom';
-import './details.scss';
 import { Loader } from '../loader/loader';
 import { useGetObjectQuery } from '../../api/api';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useSetQuery } from '../../hooks/useSetQuery';
+import styles from './details.module.scss';
 
-export function DetailedPage() {
-  const [id]: [id: string] = useOutletContext();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { data, error, isLoading } = useGetObjectQuery(id);
+interface IMyProps {
+  id: string;
+}
+
+export function DetailedPage(props: IMyProps) {
+  const router = useRouter();
+  const { data, error, isLoading } = useGetObjectQuery(props.id);
+  const setQuery = useSetQuery();
 
   const changeUrl = () => {
-    searchParams.delete('details');
-    setSearchParams(searchParams);
+    const query = router.asPath.split('?')[1];
+    const newParams = new URLSearchParams(query);
+    newParams.delete('details');
+    setQuery(newParams);
   };
 
   return (
-    <div className="details">
-      <div className="close-button" onClick={changeUrl}>
+    <div className={styles.details}>
+      <div className={styles.closeButton} onClick={changeUrl}>
         ✖
       </div>
-      <div className="details-item">
+      <div className={styles.details__item}>
         {isLoading && <Loader />}
         {error && <div>Something went wrong...</div>}
         {data && (

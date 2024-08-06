@@ -2,7 +2,8 @@ import { IAstronomicalObject } from '../../types';
 import Card from '../card/card';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import './cardList.scss';
+import React from 'react';
+import styles from './cardList.module.scss';
 
 export function CardList() {
   const objectsData: IAstronomicalObject[] = useSelector(
@@ -15,9 +16,9 @@ export function CardList() {
   return (
     <>
       {!isLoading && objectsData && (
-        <div className="results">
+        <div className={styles.results}>
           {objectsData.length === 0 && <h2 className="">Nothing found</h2>}
-          <div className="result-container">
+          <div className={styles.resultContainer}>
             {objectsData.map((item: IAstronomicalObject) => (
               <Card key={item.uid.toString()} data={item} />
             ))}

@@ -18,13 +18,11 @@
   justify-content: space-between;
 }
 
-.light {
-  .flyout {
-    background-color: white;
-    color: black;
-  }
+.flyout_light {
+  background-color: white;
+  color: black;
+}
 
-  button {
-    background-color: #cac7c7;
-  }
+.button_light {
+  background-color: #cac7c7;
 }

@@ -1,17 +1,22 @@
-import { useSearchParams } from 'react-router-dom';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import { useGetObjectsMutation } from '../../api/api';
 import { useDispatch } from 'react-redux';
 import { setObjects } from '../../store/slices/objectsSlice';
 import { setIsLoading } from '../../store/slices/isLoadingSlice';
 import { setIsLast } from '../../store/slices/isLastSlice';
-import { useEffect } from 'react';
-import './search.scss';
+import { useEffect, useContext } from 'react';
+import ThemeContext from '../../context/themeContext';
+import { useRouter } from 'next/router';
+import { useSetQuery } from '../../hooks/useSetQuery';
+import React from 'react';
+import styles from './search.module.scss';
 
 export function Search() {
+  const { theme } = useContext(ThemeContext);
   const [searchString, setSearchString, saveSearchString] = useSearchQuery();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageNumber = (Number(searchParams.get('page')) || 1) - 1;
+  const router = useRouter();
+  const setQuery = useSetQuery();
+  const pageNumber = (Number(router.query.page) || 1) - 1;
   const [getObjects, { isLoading }] = useGetObjectsMutation();
   const dispatch = useDispatch();
 
@@ -31,20 +36,35 @@ export function Search() {
   };
 
   return (
-    <div className="search-block">
+    <div
+      className={
+        theme === 'light'
+          ? `${styles.searchBlock} ${styles.searchBlock_light}`
+          : styles.searchBlock
+      }
+    >
       <div>Find astronomical object</div>
-      <div className="search">
+      <div
+        className={
+          theme === 'light'
+            ? `${styles.search} ${styles.search_light}`
+            : styles.search
+        }
+      >
         <input
           type="search"
           value={searchString}
-          className="search-input"
+          className={styles.searchInput}
           onChange={(event) => setSearchString(event.target.value.trim())}
         ></input>
         <div
-          className="loupe"
+          className={styles.loupe}
           onClick={() => {
             saveSearchString();
-            setSearchParams({ page: '1' });
+            const query = router.asPath.split('?')[1];
+            const searchParams = new URLSearchParams(query);
+            searchParams.set('page', '1');
+            setQuery(searchParams);
             search();
           }}
         ></div>

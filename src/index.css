@@ -14,6 +14,29 @@
   width: 100%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+input {
+  outline: none;
+}
+
+#__next {
+  width: 100%;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -53,6 +76,10 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.page {
+  display: flex;
 }
 
 @media (prefers-color-scheme: light) {

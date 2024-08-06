@@ -1,22 +1,33 @@
-import { useSearchParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import { useSetQuery } from '../../hooks/useSetQuery';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import './pagination.scss';
+import React from 'react';
+import styles from './pagination.module.scss';
 
 export default function Pagination() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get('page')) || 1;
+  const router = useRouter();
+  const page = Number(router.query.page) || 1;
   const isLast = useSelector((state: RootState) => state.isLast.isLast);
+  const setQuery = useSetQuery();
+
   const increasePage = () => {
-    setSearchParams({ page: `${page + 1}` });
+    const query = router.asPath.split('?')[1];
+    const searchParams = new URLSearchParams(query);
+    searchParams.set('page', `${page + 1}`);
+    setQuery(searchParams);
   };
+
   const decreasePage = () => {
-    setSearchParams({ page: `${page - 1}` });
+    const query = router.asPath.split('?')[1];
+    const searchParams = new URLSearchParams(query);
+    searchParams.set('page', `${page - 1}`);
+    setQuery(searchParams);
   };
 
   return (
     <>
-      <div className="pagination">
+      <div className={styles.pagination}>
         <div
           className="prev-button"
           onClick={() => {

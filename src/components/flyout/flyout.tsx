@@ -2,9 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setSelected } from '../../store/slices/selectedSlice';
 import { ISelectedItems } from '../../types';
-import './flyout.scss';
+import ThemeContext from '../../context/themeContext';
+import React, { useContext } from 'react';
+import styles from './flyout.module.scss';
 
 export default function Flyout() {
+  const { theme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const selectedItems: ISelectedItems = useSelector(
     (state: RootState) => state.selected.selected
@@ -27,17 +30,30 @@ export default function Flyout() {
   return (
     <>
       {Object.keys(selectedItems).length > 0 && (
-        <div className="flyout">
-          <h3 className="flyout__title">
+        <div
+          className={
+            theme === 'light'
+              ? `${styles.flyout} ${styles.flyout_light}`
+              : styles.flyout
+          }
+        >
+          <h3 className={styles.flyout__title}>
             {Object.keys(selectedItems).length} item
             {Object.keys(selectedItems).length > 1 && 's'} selected
           </h3>
-          <div className="flyout__buttons">
-            <button onClick={() => dispatch(setSelected([]))}>
+          <div className={styles.flyout__buttons}>
+            <button
+              className={theme === 'light' ? `${styles.button_light}` : ''}
+              onClick={() => dispatch(setSelected([]))}
+            >
               Unselect all
             </button>
             <a href={downloadCSV()} download="astronomical objects.csv">
-              <button>Download</button>
+              <button
+                className={theme === 'light' ? `${styles.button_light}` : ''}
+              >
+                Download
+              </button>
             </a>
           </div>
         </div>

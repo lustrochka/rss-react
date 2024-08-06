@@ -1,7 +1,6 @@
 import { Search } from '../search/search';
 import { CardList } from '../cardList/cardList';
 import Pagination from '../pagination/pagination';
-import { useSearchParams } from 'react-router-dom';
 import Flyout from '../flyout/flyout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
@@ -9,33 +8,43 @@ import { Loader } from '../loader/loader';
 import ThemeButton from '../themeButton/themeButton';
 import { useContext } from 'react';
 import ThemeContext from '../../context/themeContext';
-import './page.scss';
+import { useRouter } from 'next/router';
+import { useSetQuery } from '../../hooks/useSetQuery';
+import React from 'react';
+import styles from './page.module.scss';
 
 export function Page() {
   const { theme } = useContext(ThemeContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const router = useRouter();
+  const setQuery = useSetQuery();
   const isLoading: boolean = useSelector(
     (state: RootState) => state.isLoading.isLoading
   );
 
   const changeUrl = () => {
-    if (searchParams.get('details')) {
-      searchParams.delete('details');
-      setSearchParams(searchParams);
+    const query = router.asPath.split('?')[1];
+    if (router.query.details) {
+      const newParams = new URLSearchParams(query);
+      newParams.delete('details');
+      setQuery(newParams);
     }
   };
 
   return (
     <>
       <div
-        className={theme === 'light' ? 'main-page light' : 'main-page'}
+        className={
+          theme === 'light'
+            ? `${styles.mainPage} ${styles.light}`
+            : styles.mainPage
+        }
         onClick={changeUrl}
       >
-        <div className="top-section">
+        <div className={styles.topSection}>
           <Search />
           <ThemeButton></ThemeButton>
         </div>
-        <div className="bottom-section">
+        <div className={styles.bottomSection}>
           {isLoading && <Loader />}
           <CardList />
           {!isLoading && <Pagination />}
