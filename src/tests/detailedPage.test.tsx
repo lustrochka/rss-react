@@ -6,43 +6,19 @@ import { store } from '../store/store';
 import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import { server } from './mocks/server';
+import React from 'react';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { createMockRouter } from '../mocks/createMockRouter';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useOutletContext: () => ['1'],
-}));
-
-/*(axios.get as jest.Mock).mockResolvedValue({
-  data: {
-    astronomicalObject: {
-      uid: 'ASMA0000289027',
-      name: '1 Centauri',
-      astronomicalObjectType: 'STAR_SYSTEM',
-      location: {
-        uid: 'ASMA0000002015',
-        name: 'Beta Quadrant',
-        astronomicalObjectType: null,
-        location: {
-          uid: 'ASMA0000002775',
-          name: 'Milky Way Galaxy',
-        },
-      },
-      astronomicalObjects: [],
-    },
-  },
-});*/
-
 const { container } = render(
   <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<DetailedPage />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <RouterContext.Provider value={createMockRouter({})}>
+      <DetailedPage id="1" />
+    </RouterContext.Provider>
   </Provider>
 );
 

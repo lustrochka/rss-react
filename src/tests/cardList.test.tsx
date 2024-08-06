@@ -7,6 +7,9 @@ import { Provider } from 'react-redux';
 import { server } from './mocks/server';
 import { BASE_URL } from './mocks/handlers';
 import { http } from 'msw';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { createMockRouter } from '../mocks/createMockRouter';
+import React from 'react';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -16,11 +19,9 @@ describe('CardList', () => {
   it('renders the specified number of cards', async () => {
     const { container } = render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="*" element={<CardList />}></Route>
-          </Routes>
-        </BrowserRouter>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <CardList />
+        </RouterContext.Provider>
       </Provider>
     );
     waitFor(() =>
@@ -31,11 +32,9 @@ describe('CardList', () => {
   it('message is displayed if no cards are present', () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="*" element={<CardList />}></Route>
-          </Routes>
-        </BrowserRouter>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <CardList />
+        </RouterContext.Provider>
       </Provider>
     );
     server.use(

@@ -6,6 +6,9 @@ import userEvent from '@testing-library/user-event';
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
 import { server } from './mocks/server';
+import React from 'react';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { createMockRouter } from '../mocks/createMockRouter';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -37,11 +40,9 @@ describe('Search', () => {
   it('sets search string into localStorage', async () => {
     const { container } = render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="*" element={<Search></Search>}></Route>
-          </Routes>
-        </BrowserRouter>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <Search />
+        </RouterContext.Provider>
       </Provider>
     );
     const spyLoStoRemove = jest.spyOn(localStorage, 'setItem');
@@ -55,11 +56,9 @@ describe('Search', () => {
     localStorageMock.setItem('searchString', 'death');
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="*" element={<Search />}></Route>
-          </Routes>
-        </BrowserRouter>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <Search />
+        </RouterContext.Provider>
       </Provider>
     );
     expect(screen.getByRole('searchbox')).toHaveValue('death');

@@ -6,6 +6,9 @@ import userEvent from '@testing-library/user-event';
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
 import { server } from './mocks/server';
+import React from 'react';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { createMockRouter } from '../mocks/createMockRouter';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -15,11 +18,9 @@ describe('CardList', () => {
   it('changes query params when clicking', () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="*" element={<Pagination />}></Route>
-          </Routes>
-        </BrowserRouter>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <Pagination />
+        </RouterContext.Provider>
       </Provider>
     );
     const btn = screen.getByText(/🠚/i);
