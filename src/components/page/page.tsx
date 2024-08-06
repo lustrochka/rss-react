@@ -16,7 +16,7 @@ import styles from './page.module.scss';
 export function Page() {
   const { theme } = useContext(ThemeContext);
   const router = useRouter();
-  const setQuery = useSetQuery();
+  const [, setQuery] = useSetQuery();
   const isLoading: boolean = useSelector(
     (state: RootState) => state.isLoading.isLoading
   );

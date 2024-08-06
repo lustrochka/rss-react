@@ -1,7 +1,11 @@
 import { useRouter } from 'next/router';
 
-export function useSetQuery() {
+type UseSetQueryType = [URLSearchParams, (newParams: URLSearchParams) => void];
+
+export function useSetQuery(): UseSetQueryType {
   const router = useRouter();
+  const query = new URLSearchParams(router.asPath.split('?')[1]);
+
   const setQuery = (newParams: URLSearchParams) => {
     const currentPath = router.pathname;
     const params = Object.fromEntries(newParams);
@@ -11,5 +15,5 @@ export function useSetQuery() {
       query: params,
     });
   };
-  return setQuery;
+  return [query, setQuery];
 }

@@ -1,6 +1,5 @@
 import { Loader } from '../loader/loader';
 import { useGetObjectQuery } from '../../api/api';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useSetQuery } from '../../hooks/useSetQuery';
 import styles from './details.module.scss';
@@ -10,15 +9,12 @@ interface IMyProps {
 }
 
 export function DetailedPage(props: IMyProps) {
-  const router = useRouter();
   const { data, error, isLoading } = useGetObjectQuery(props.id);
-  const setQuery = useSetQuery();
+  const [query, setQuery] = useSetQuery();
 
   const changeUrl = () => {
-    const query = router.asPath.split('?')[1];
-    const newParams = new URLSearchParams(query);
-    newParams.delete('details');
-    setQuery(newParams);
+    query.delete('details');
+    setQuery(query);
   };
 
   return (

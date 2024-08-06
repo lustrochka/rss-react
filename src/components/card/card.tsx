@@ -1,6 +1,5 @@
 import { IAstronomicalObject, ISelectedItems } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import { RootState } from '../../store/store';
 import { setSelected } from '../../store/slices/selectedSlice';
 import { useEffect, useState, useContext } from 'react';
@@ -17,8 +16,7 @@ interface IMyProps {
 export default function Card(props: IMyProps) {
   const { theme } = useContext(ThemeContext);
   const dispatch = useDispatch();
-  const router = useRouter();
-  const setQuery = useSetQuery();
+  const [query, setQuery] = useSetQuery();
   const selectedItems: ISelectedItems = useSelector(
     (state: RootState) => state.selected.selected
   );
@@ -40,10 +38,17 @@ export default function Card(props: IMyProps) {
   };
 
   const goToItem = (id: number) => {
-    const query = router.asPath.split('?')[1];
-    const newSearchParams = new URLSearchParams(query);
-    newSearchParams.set('details', `${id}`);
-    setQuery(newSearchParams);
+    query.set('details', `${id}`);
+    setQuery(query);
+  };
+
+  const checkLocation = (location) => {
+    if (!location) {
+      return '';
+    } else if (!location.location) {
+      return `${location.name}`;
+    }
+    return `${location.name}, ${location.location.name}`;
   };
 
   const changeSelectedItems = () => {
@@ -51,9 +56,7 @@ export default function Card(props: IMyProps) {
     selectedItemsCopy[props.data.uid.toString()] = {
       name: data?.astronomicalObject.name || '',
       type: data?.astronomicalObject.astronomicalObjectType || '',
-      ...(data?.astronomicalObject.location && {
-        location: `${data.astronomicalObject.location.name}, ${data.astronomicalObject.location.location.name}`,
-      }),
+      location: checkLocation(data?.astronomicalObject.location),
     };
     return selectedItemsCopy;
   };

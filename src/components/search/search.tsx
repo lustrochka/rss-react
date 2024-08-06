@@ -6,7 +6,6 @@ import { setIsLoading } from '../../store/slices/isLoadingSlice';
 import { setIsLast } from '../../store/slices/isLastSlice';
 import { useEffect, useContext } from 'react';
 import ThemeContext from '../../context/themeContext';
-import { useRouter } from 'next/router';
 import { useSetQuery } from '../../hooks/useSetQuery';
 import React from 'react';
 import styles from './search.module.scss';
@@ -14,9 +13,8 @@ import styles from './search.module.scss';
 export function Search() {
   const { theme } = useContext(ThemeContext);
   const [searchString, setSearchString, saveSearchString] = useSearchQuery();
-  const router = useRouter();
-  const setQuery = useSetQuery();
-  const pageNumber = (Number(router.query.page) || 1) - 1;
+  const [query, setQuery] = useSetQuery();
+  const pageNumber = (Number(query.get('page')) || 1) - 1;
   const [getObjects, { isLoading }] = useGetObjectsMutation();
   const dispatch = useDispatch();
 
@@ -61,10 +59,8 @@ export function Search() {
           className={styles.loupe}
           onClick={() => {
             saveSearchString();
-            const query = router.asPath.split('?')[1];
-            const searchParams = new URLSearchParams(query);
-            searchParams.set('page', '1');
-            setQuery(searchParams);
+            query.set('page', '1');
+            setQuery(query);
             search();
           }}
         ></div>
