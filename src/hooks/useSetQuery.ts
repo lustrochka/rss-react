@@ -1,19 +1,15 @@
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type UseSetQueryType = [URLSearchParams, (newParams: URLSearchParams) => void];
 
 export function useSetQuery(): UseSetQueryType {
+  const pathname = usePathname();
   const router = useRouter();
-  const query = new URLSearchParams(router.asPath.split('?')[1]);
+  const searchParams = useSearchParams();
+  const query = new URLSearchParams(searchParams.toString());
 
   const setQuery = (newParams: URLSearchParams) => {
-    const currentPath = router.pathname;
-    const params = Object.fromEntries(newParams);
-
-    router.push({
-      pathname: currentPath,
-      query: params,
-    });
+    router.push(`${pathname}?${newParams.toString()}`);
   };
   return [query, setQuery];
 }
