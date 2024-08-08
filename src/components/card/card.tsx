@@ -2,12 +2,13 @@ import { IAstronomicalObject, ISelectedItems } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setSelected } from '../../store/slices/selectedSlice';
-import { useEffect, useState, useContext } from 'react';
-import { useGetObjectQuery } from '../../api/api';
+import { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 import { useSetQuery } from '../../hooks/useSetQuery';
 import ThemeContext from '../../context/themeContext';
 import React from 'react';
 import styles from './card.module.scss';
+import { IObjectResponse } from '../../types';
 
 interface IMyProps {
   data: IAstronomicalObject;
@@ -20,11 +21,7 @@ export default function Card(props: IMyProps) {
   const selectedItems: ISelectedItems = useSelector(
     (state: RootState) => state.selected.selected
   );
-  const [shouldFetch, setShouldFetch] = useState(false);
-
-  const { data } = useGetObjectQuery(props.data.uid.toString(), {
-    skip: !shouldFetch,
-  });
+  const [data, setData] = useState<IObjectResponse | null>(null);
 
   useEffect(() => {
     if (data) dispatch(setSelected(changeSelectedItems()));
@@ -51,12 +48,27 @@ export default function Card(props: IMyProps) {
     return `${location.name}, ${location.location.name}`;
   };
 
+  const getDetailedObject = () => {
+    const BASE_URL = 'http://stapi.co/api/v1/rest/astronomicalObject';
+
+    axios
+      .get(BASE_URL, {
+        params: { uid: props.data.uid },
+      })
+      .then((res) => {
+        setData(res.data.astronomicalObject);
+      })
+      .catch(() => {
+        throw new Error('Wrong item number');
+      });
+  };
+
   const changeSelectedItems = () => {
     const selectedItemsCopy = { ...selectedItems };
     selectedItemsCopy[props.data.uid.toString()] = {
-      name: data?.astronomicalObject.name || '',
-      type: data?.astronomicalObject.astronomicalObjectType || '',
-      location: checkLocation(data?.astronomicalObject.location),
+      name: data?.name || '',
+      type: data?.astronomicalObjectType || '',
+      location: checkLocation(data?.location),
     };
     return selectedItemsCopy;
   };
@@ -64,7 +76,7 @@ export default function Card(props: IMyProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       if (!data) {
-        setShouldFetch(true);
+        getDetailedObject();
       } else {
         dispatch(setSelected(changeSelectedItems()));
       }

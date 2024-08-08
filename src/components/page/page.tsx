@@ -47,7 +47,7 @@ export function Page() {
         <div className={styles.bottomSection}>
           {isLoading && <Loader />}
           <CardList />
-          {!isLoading && <Pagination />}
+          <Pagination />
           <Flyout></Flyout>
         </div>
       </div>

@@ -1,7 +1,9 @@
 import { Loader } from '../loader/loader';
-import { useGetObjectQuery } from '../../api/api';
+import { RootState } from '../../store/store';
 import React from 'react';
 import { useSetQuery } from '../../hooks/useSetQuery';
+import { useSelector } from 'react-redux';
+import { IObjectResponse } from '../../types';
 import styles from './details.module.scss';
 
 interface IMyProps {
@@ -9,7 +11,12 @@ interface IMyProps {
 }
 
 export function DetailedPage(props: IMyProps) {
-  const { data, error, isLoading } = useGetObjectQuery(props.id);
+  const data: Partial<IObjectResponse> = useSelector(
+    (state: RootState) => state.object.object
+  );
+  const isLoading = useSelector(
+    (state: RootState) => state.isLoading.isDetailsLoading
+  );
   const [query, setQuery] = useSetQuery();
 
   const changeUrl = () => {
@@ -24,13 +31,12 @@ export function DetailedPage(props: IMyProps) {
       </div>
       <div className={styles.details__item}>
         {isLoading && <Loader />}
-        {error && <div>Something went wrong...</div>}
-        {data && (
+        {Object.keys(data).length > 0 && (
           <>
-            <h2>{data.astronomicalObject.name}</h2>
-            <div>{data.astronomicalObject.astronomicalObjectType}</div>
-            {data.astronomicalObject.location && (
-              <div>{`${data.astronomicalObject.location.name}, ${data.astronomicalObject.location.location.name}`}</div>
+            <h2>{data.name}</h2>
+            <div>{data.astronomicalObjectType}</div>
+            {data.location && (
+              <div>{`${data.location.name}, ${data.location.location.name}`}</div>
             )}
           </>
         )}

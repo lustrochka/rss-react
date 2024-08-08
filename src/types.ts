@@ -10,14 +10,12 @@ export interface IObjectsResponse {
 }
 
 export interface IObjectResponse {
-  astronomicalObject: {
+  name: string;
+  astronomicalObjectType: string;
+  location?: {
     name: string;
-    astronomicalObjectType: string;
-    location?: {
+    location: {
       name: string;
-      location: {
-        name: string;
-      };
     };
   };
 }
