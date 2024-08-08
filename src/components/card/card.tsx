@@ -14,6 +14,8 @@ interface IMyProps {
   data: IAstronomicalObject;
 }
 
+export const BASE_URL = 'http://stapi.co/api/v1/rest/astronomicalObject';
+
 export default function Card(props: IMyProps) {
   const { theme } = useContext(ThemeContext);
   const dispatch = useDispatch();
@@ -49,8 +51,6 @@ export default function Card(props: IMyProps) {
   };
 
   const getDetailedObject = () => {
-    const BASE_URL = 'http://stapi.co/api/v1/rest/astronomicalObject';
-
     axios
       .get(BASE_URL, {
         params: { uid: props.data.uid },

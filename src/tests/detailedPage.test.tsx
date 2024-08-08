@@ -5,10 +5,10 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import { server } from './mocks/server';
+import { server } from '../../mocks/server';
 import React from 'react';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
-import { createMockRouter } from '../mocks/createMockRouter';
+import { createMockRouter } from '../../mocks/createMockRouter';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());

@@ -1,14 +1,13 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { CardList } from '../components/cardList/cardList';
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
-import { server } from './mocks/server';
-import { BASE_URL } from './mocks/handlers';
+import { server } from '../../mocks/server';
+import { BASE_URL } from '../components/card/card';
 import { http } from 'msw';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
-import { createMockRouter } from '../mocks/createMockRouter';
+import { createMockRouter } from '../../mocks/createMockRouter';
 import React from 'react';
 
 beforeAll(() => server.listen());

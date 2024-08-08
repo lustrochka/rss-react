@@ -5,12 +5,12 @@ import userEvent from '@testing-library/user-event';
 import { waitFor } from '@testing-library/react';
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
-import { server } from './mocks/server';
+import { server } from '../../mocks/server';
 import { http } from 'msw';
-import { BASE_URL } from './mocks/handlers';
+import { BASE_URL } from '../components/card/card';
 import React from 'react';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
-import { createMockRouter } from '../mocks/createMockRouter';
+import { createMockRouter } from '../../mocks/createMockRouter';
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
