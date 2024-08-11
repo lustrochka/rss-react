@@ -40,3 +40,9 @@ export interface ISelectedItems {
     location?: string;
   };
 }
+
+export interface ISearchParams {
+  details?: string;
+  page?: string;
+  search?: string;
+}

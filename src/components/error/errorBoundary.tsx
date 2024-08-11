@@ -1,6 +1,5 @@
 import { Component, ReactNode } from 'react';
 import React from 'react';
-import styles from './errorBoundary.module.scss';
 
 interface Props {
   children: ReactNode;
@@ -27,17 +26,17 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className={styles.errorBlock}>
+        <div className="errorBlock">
           <h2>Something went wrong...</h2>
-          <div className={styles.eyes}>
-            <div className={styles.eye}>
-              <div className={styles.pupil}>
-                <div className={styles.blick}></div>
+          <div className="eyes">
+            <div className="eye">
+              <div className="pupil">
+                <div className="blick"></div>
               </div>
             </div>
-            <div className={styles.eye}>
-              <div className={styles.pupil}>
-                <div className={styles.blick}></div>
+            <div className="eye">
+              <div className="pupil">
+                <div className="blick"></div>
               </div>
             </div>
           </div>

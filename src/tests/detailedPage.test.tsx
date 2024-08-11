@@ -1,26 +1,34 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { DetailedPage } from '../components/detailedPage/detailedPage';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { store } from '../store/store';
-import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import { server } from './mocks/server';
 import React from 'react';
-import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
-import { createMockRouter } from '../mocks/createMockRouter';
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+jest.mock('../hooks/useSetQuery', () => ({
+  useSetQuery: jest.fn().mockReturnValue([new URLSearchParams(), jest.fn()]),
+}));
 
-const { container } = render(
-  <Provider store={store}>
-    <RouterContext.Provider value={createMockRouter({})}>
-      <DetailedPage id="1" />
-    </RouterContext.Provider>
-  </Provider>
-);
+const data = {
+  data: {
+    astronomicalObject: {
+      uid: 'ASMA0000289027',
+      name: '1 Centauri',
+      astronomicalObjectType: 'STAR_SYSTEM',
+      location: {
+        uid: 'ASMA0000002015',
+        name: 'Beta Quadrant',
+        astronomicalObjectType: null,
+        location: {
+          uid: 'ASMA0000002775',
+          name: 'Milky Way Galaxy',
+        },
+      },
+      astronomicalObjects: [],
+    },
+  },
+};
+
+const { container } = render(<DetailedPage data={data} />);
 
 describe('DetailedPage', () => {
   it('shows loader', async () => {

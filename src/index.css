@@ -33,7 +33,7 @@ input {
   outline: none;
 }
 
-#__next {
+main {
   width: 100%;
 }
 
@@ -80,6 +80,411 @@ button:focus-visible {
 
 .page {
   display: flex;
+}
+
+.page:has(#themeInput:checked) {
+  .resultItem {
+    background-color: #3290bf;
+  }
+
+  .flyout {
+    background-color: white;
+    color: black;
+  }
+
+  .topSection {
+    background-color: white;
+  }
+
+  .bottomSection {
+    background-color: #afdffa;
+  }
+
+  .button {
+    background-color: #cac7c7;
+  }
+
+  .searchBlock {
+    color: black;
+  }
+  .search {
+    border: none;
+  }
+}
+
+/* error */
+
+@keyframes looking {
+  0%,
+  4%,
+  91%,
+  95%,
+  100% {
+    transform: translate(10px, 10px);
+  }
+  18.5%,
+  76.5% {
+    transform: translate(15px, 10px);
+  }
+  47.5% {
+    transform: translate(5px, 10px);
+  }
+}
+
+@keyframes blinking {
+  0%,
+  95% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+.hiding {
+  display: none !important;
+}
+
+.errorBlock {
+  width: 300px;
+  margin: 100px auto;
+}
+
+.eyes {
+  display: flex;
+  width: 120px;
+  margin: 0 auto;
+}
+
+.eye {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 2px black;
+  animation: blinking 4s infinite;
+  &:first-child {
+    margin-right: 10px;
+  }
+}
+
+.pupil {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: black;
+  animation: looking 4s infinite;
+}
+
+.blick {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  animation: looking 4s infinite;
+}
+
+/* card */
+
+.resultItem {
+  padding: 0 10px 10px;
+  border: 2px solid rgb(120, 120, 120);
+  border-radius: 5px;
+  font-size: 12px;
+  background-color: rgb(239, 236, 174);
+  position: relative;
+}
+
+.cardCheckbox {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  visibility: hidden;
+}
+
+.cardCheckbox::before {
+  content: '✓';
+  flex-wrap: wrap;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  visibility: visible;
+  height: 11px;
+  width: 11px;
+  position: absolute;
+  border: 1px solid #213547;
+  border-radius: 2px;
+  background-color: rgb(243 242 213);
+  color: rgb(243 242 213);
+  font-size: 12px;
+}
+
+.cardCheckbox:checked::before {
+  background-color: #213547;
+  color: white;
+}
+
+/* cardlist */
+
+.notFound {
+  text-align: center;
+  color: black;
+}
+
+.resultContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 250px);
+  gap: 10px;
+  justify-content: space-evenly;
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* details */
+
+.details {
+  width: 50%;
+  height: 100vh;
+  text-align: center;
+  background-color: rgb(205, 192, 141);
+  padding: 60px 10px;
+}
+
+.details__item {
+  border: 5px double black;
+}
+
+.closeButton {
+  color: black;
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+/* boundary */
+
+@keyframes looking {
+  0%,
+  4%,
+  91%,
+  95%,
+  100% {
+    transform: translate(10px, 10px);
+  }
+  18.5%,
+  76.5% {
+    transform: translate(15px, 10px);
+  }
+  47.5% {
+    transform: translate(5px, 10px);
+  }
+}
+
+@keyframes blinking {
+  0%,
+  95% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+.hiding {
+  display: none !important;
+}
+
+.errorBlock {
+  width: 300px;
+  margin: 100px auto;
+}
+
+.eyes {
+  display: flex;
+  width: 120px;
+  margin: 0 auto;
+}
+
+.eye {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 2px black;
+  animation: blinking 4s infinite;
+  &:first-child {
+    margin-right: 10px;
+  }
+}
+
+.pupil {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: black;
+  animation: looking 4s infinite;
+}
+
+.blick {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  animation: looking 4s infinite;
+}
+
+/* flyout */
+
+.flyout {
+  position: fixed;
+  width: 300px;
+  left: calc(50% - 150px);
+  bottom: 10px;
+  background-color: #222222;
+  color: white;
+  padding: 15px;
+}
+
+.flyout__title {
+  text-align: center;
+  margin-top: 0;
+}
+
+.flyout__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* page */
+
+.mainPage {
+  width: 100%;
+}
+
+.topSection {
+  padding: 30px;
+  background-color: #1a1a1a;
+  position: relative;
+}
+
+.bottomSection {
+  background-color: #bf7232;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+/* pagination */
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 55px;
+  div:nth-child(2) {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 100%;
+    border: 2px solid #213547;
+    padding: 1px 10px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+/* search */
+
+.searchBlock {
+  width: 250px;
+  margin: 0 auto;
+  color: white;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  background-color: rgb(70, 70, 70);
+  border-radius: 10px;
+  border: solid 2px #fddd32;
+}
+
+.searchInput {
+  color: white;
+  border: none;
+  background-color: rgb(70, 70, 70);
+  border-radius: 10px;
+}
+
+.loupe {
+  width: 20px;
+  height: 30px;
+  margin: 5px 8px 0;
+  background-image: url('/drawing-2.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+/* theme buton */
+
+.themeLabel {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: white;
+  width: 42px;
+  height: 23.5px;
+  border: 1px solid black;
+
+  &::after {
+    display: block;
+    content: '';
+    width: 13px;
+    height: 13px;
+    margin: -3px 0 3px 0;
+    border-radius: 50%;
+    box-shadow: 4px 4px 0 0 white;
+    position: absolute;
+    top: 2px;
+    left: -1px;
+  }
+
+  &::before {
+    display: block;
+    content: '';
+    width: 18px;
+    height: 18px;
+    background-color: black;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: 0.1s;
+  }
+
+  &:has(input:checked) {
+    &::before {
+      left: 20px;
+      content: '☀';
+      color: #f4fa69;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+}
+
+#themeInput {
+  display: none;
 }
 
 @media (prefers-color-scheme: light) {

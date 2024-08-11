@@ -1,30 +1,26 @@
-'use client';
-
 import ErrorBoundary from './error';
-import { Provider } from 'react-redux';
-import { store } from '../store/store';
-import ThemeProvider from '../context/themeProvider';
 import React from 'react';
 import { DetailedPage } from '../components/detailedPage/detailedPage';
 import { Page } from '../components/page/page';
-import { useSearchParams } from 'next/navigation';
+import { ISearchParams } from '../types';
+import { getObjects, getDetails } from '../api/api';
 import '../index.css';
 
-export default function App() {
-  const searchParams = useSearchParams();
+export default async function App({
+  searchParams,
+}: {
+  searchParams: ISearchParams;
+}) {
+  const res = await getObjects(searchParams);
+  const details = searchParams.details;
+  const detailsData = details ? await getDetails(details) : { data: {} };
 
   return (
     <ErrorBoundary>
-      <Provider store={store}>
-        <ThemeProvider>
-          <div className="page">
-            <Page></Page>
-            {searchParams.has('details') && (
-              <DetailedPage id={searchParams.get('details') || ''} />
-            )}
-          </div>
-        </ThemeProvider>
-      </Provider>
+      <div className="page">
+        <Page data={res}></Page>
+        {details && <DetailedPage data={detailsData} />}
+      </div>
     </ErrorBoundary>
   );
 }

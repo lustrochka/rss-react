@@ -1,36 +1,33 @@
-import { Loader } from '../loader/loader';
-import { useGetObjectQuery } from '../../api/api';
 import React from 'react';
-import { useSetQuery } from '../../hooks/useSetQuery';
-import styles from './details.module.scss';
+import { IObjectResponse } from '../../types';
+import CloseButton from './closeButton';
 
-interface IMyProps {
-  id: string;
+interface IDetailsData {
+  data: { data: Partial<IObjectResponse> };
 }
 
-export function DetailedPage(props: IMyProps) {
-  const { data, error, isLoading } = useGetObjectQuery(props.id);
-  const [query, setQuery] = useSetQuery();
-
-  const changeUrl = () => {
-    query.delete('details');
-    setQuery(query);
+export function DetailedPage({ data }: IDetailsData) {
+  const checkLocation = (location) => {
+    if (!location) {
+      return '';
+    } else if (!location.location) {
+      return `${location.name}`;
+    }
+    return `${location.name}, ${location.location.name}`;
   };
 
   return (
-    <div className={styles.details}>
-      <div className={styles.closeButton} onClick={changeUrl}>
-        ✖
-      </div>
-      <div className={styles.details__item}>
-        {isLoading && <Loader />}
-        {error && <div>Something went wrong...</div>}
+    <div className="details">
+      <CloseButton></CloseButton>
+      <div className="details__item">
         {data && (
           <>
-            <h2>{data.astronomicalObject.name}</h2>
-            <div>{data.astronomicalObject.astronomicalObjectType}</div>
-            {data.astronomicalObject.location && (
-              <div>{`${data.astronomicalObject.location.name}, ${data.astronomicalObject.location.location.name}`}</div>
+            <h2>{data?.data?.astronomicalObject?.name || ''}</h2>
+            <div>
+              {data?.data?.astronomicalObject?.astronomicalObjectType || ''}
+            </div>
+            {data?.data?.astronomicalObject?.location && (
+              <div>{`${checkLocation(data?.data?.astronomicalObject?.location)}`}</div>
             )}
           </>
         )}

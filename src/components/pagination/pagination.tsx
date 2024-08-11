@@ -1,11 +1,9 @@
-import { useSetQuery } from '../../hooks/useSetQuery';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import React from 'react';
-import styles from './pagination.module.scss';
+'use client';
 
-export default function Pagination() {
-  const isLast = useSelector((state: RootState) => state.isLast.isLast);
+import { useSetQuery } from '../../hooks/useSetQuery';
+import React from 'react';
+
+export default function Pagination({ isLast }: { isLast: boolean }) {
   const [query, setQuery] = useSetQuery();
   const page = Number(query.get('page')) || 1;
 
@@ -21,7 +19,7 @@ export default function Pagination() {
 
   return (
     <>
-      <div className={styles.pagination}>
+      <div className="pagination">
         <div
           className="prev-button"
           onClick={() => {

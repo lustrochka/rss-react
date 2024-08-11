@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type UseSetQueryType = [URLSearchParams, (newParams: URLSearchParams) => void];
