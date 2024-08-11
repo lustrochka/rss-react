@@ -1,0 +1,17 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 55px;
+  div:nth-child(2) {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 100%;
+    border: 2px solid #213547;
+    padding: 1px 10px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}

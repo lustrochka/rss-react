@@ -1,0 +1,25 @@
+.mainPage {
+  width: 100%;
+}
+
+.topSection {
+  padding: 30px;
+  background-color: #1a1a1a;
+  position: relative;
+}
+
+.bottomSection {
+  background-color: #bf7232;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+.light {
+  .topSection {
+    background-color: white;
+  }
+
+  .bottomSection {
+    background-color: #afdffa;
+  }
+}
