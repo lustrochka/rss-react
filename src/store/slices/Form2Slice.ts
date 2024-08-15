@@ -10,15 +10,15 @@ const initialState = {
   },
 };
 
-const Form1Slice = createSlice({
+const Form2Slice = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    setData: (state, action) => {
+    setData2: (state, action) => {
       state.data = action.payload;
     },
   },
 });
 
-export const { setData } = Form1Slice.actions;
-export default Form1Slice.reducer;
+export const { setData2 } = Form2Slice.actions;
+export default Form2Slice.reducer;
