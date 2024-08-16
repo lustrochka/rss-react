@@ -1,13 +1,22 @@
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
 import Form from './components/Form';
 import FormWithHook from './components/FormWithHook';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      {/*<Route path="/" element={<MainPage />}></Route>*/}
+      <Route path="form1" element={<Form />}></Route>
+      <Route path="form2" element={<FormWithHook />}></Route>
+    </Route>
+  )
+);
 
 export default function App() {
-  return (
-    <Provider store={store}>
-      <Form></Form>
-      <FormWithHook></FormWithHook>
-    </Provider>
-  );
+  return <RouterProvider router={router} />;
 }
