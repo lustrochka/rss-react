@@ -6,11 +6,12 @@ import {
 } from 'react-router-dom';
 import Form from './components/Form';
 import FormWithHook from './components/FormWithHook';
+import MainPage from './components/MainPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      {/*<Route path="/" element={<MainPage />}></Route>*/}
+      <Route path="/" element={<MainPage />}></Route>
       <Route path="form1" element={<Form />}></Route>
       <Route path="form2" element={<FormWithHook />}></Route>
     </Route>

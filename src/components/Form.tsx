@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { setData } from '../store/slices/Form1Slice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function Form() {
   const inputRefName = useRef<HTMLInputElement>(null);
@@ -13,6 +14,7 @@ function Form() {
   const inputRefImg = useRef<HTMLInputElement>(null);
   const inputRefError = useRef<HTMLParagraphElement>(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const checkData = () => {
     const validName = /(?=.*[A-Z])/.test(inputRefName.current!.value);
     const age = Number(inputRefAge.current!.value);
@@ -51,6 +53,7 @@ function Form() {
           gender: inputRefSex.current!.value,
         })
       );
+      navigate('/');
     }
     inputRefError.current!.textContent = 'Invalid data';
   };

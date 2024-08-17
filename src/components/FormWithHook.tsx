@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { setData2 } from '../store/slices/Form2Slice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 interface FormInput {
   name: string;
@@ -12,6 +13,7 @@ interface FormInput {
   password2: string;
   accept: boolean;
   image: FileList;
+  gender: string;
 }
 
 const schema = yup.object({
@@ -43,6 +45,7 @@ const schema = yup.object({
     .boolean()
     .required()
     .oneOf([true], 'You must accept the terms and conditions'),
+  gender: yup.string().required(),
   image: yup
     .mixed<FileList>()
     .required('This is required field')
@@ -60,6 +63,7 @@ const schema = yup.object({
 
 function FormWithHook() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -68,9 +72,22 @@ function FormWithHook() {
     resolver: yupResolver<FormInput>(schema),
     mode: 'onChange',
   });
-  function onSubmit(data: FormInput) {
-    dispatch(setData2(data));
+
+  function convertToBase64(file: File) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   }
+
+  async function onSubmit(data: FormInput) {
+    const convertedImage = await convertToBase64(data.image[0]);
+    dispatch(setData2({ ...data, image: convertedImage }));
+    navigate('/');
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -101,7 +118,7 @@ function FormWithHook() {
         </div>
         <div>
           <label>Gender: </label>
-          <select>
+          <select {...register('gender')}>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
