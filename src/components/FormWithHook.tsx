@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { RootState } from '../store/store';
 import { FormInput } from '../types';
+import checkPass from '../utils/checkPass';
 
 function FormWithHook() {
   const COUNTRIES = useSelector((state: RootState) => state.countries);
@@ -26,6 +27,7 @@ function FormWithHook() {
   const [countryInput, setCountryInput] = useState('');
   const [filteredCountries, setFilteredCountries] = useState(COUNTRIES);
   const [isSelecting, setIsSelecting] = useState(false);
+  const [strength, setStrength] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCountryInput(e.target.value);
@@ -46,6 +48,10 @@ function FormWithHook() {
     setIsSelecting(false);
     setFilteredCountries(COUNTRIES);
     setValue('country', country, { shouldValidate: true, shouldDirty: true });
+  };
+
+  const handlePass = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStrength(checkPass(e.target.value));
   };
 
   async function onSubmit(data: FormInput) {
@@ -80,7 +86,14 @@ function FormWithHook() {
         </div>
         <div>
           <label>Password: </label>
-          <input type="password" {...register('password')}></input>
+          <input
+            type="password"
+            {...register('password')}
+            onChange={handlePass}
+          ></input>
+          <p className={`strength-msg ${strength.replace(' ', '')}`}>
+            {strength}
+          </p>
           <p className="error-message">
             {errors.password ? errors.password.message : ''}
           </p>

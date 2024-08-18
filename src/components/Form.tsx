@@ -7,6 +7,7 @@ import { createSchema } from '../utils/schema';
 import { FormInput } from '../types';
 import convertToBase64 from '../utils/convertToBase64';
 import { RootState } from '../store/store';
+import checkPass from '../utils/checkPass';
 import * as yup from 'yup';
 
 interface IFormErrors {
@@ -32,6 +33,7 @@ function Form() {
   const inputRefAccept = useRef<HTMLInputElement>(null);
   const inputRefImg = useRef<HTMLInputElement>(null);
   const inputRefCountry = useRef<HTMLInputElement>(null);
+  const refStrength = useRef<HTMLParagraphElement>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<IFormErrors>({
@@ -66,6 +68,14 @@ function Form() {
     }
     setIsSelecting(false);
     setFilteredCountries(COUNTRIES);
+  };
+
+  const handlePass = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const strength = checkPass(e.target.value);
+    if (refStrength.current) {
+      refStrength.current.className = `strength-msg ${strength.replace(' ', '')}`;
+      refStrength.current.textContent = strength;
+    }
   };
 
   const onSubmit = async () => {
@@ -148,7 +158,13 @@ function Form() {
         </div>
         <div>
           <label htmlFor="password">Password: </label>
-          <input id="password" type="password" ref={inputRefPass}></input>
+          <input
+            id="password"
+            type="password"
+            ref={inputRefPass}
+            onChange={handlePass}
+          ></input>
+          <p className="strength-msg" ref={refStrength}></p>
           <p className="error-message">{errors.password || ''}</p>
         </div>
         <div>

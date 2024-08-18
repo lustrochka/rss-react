@@ -55,10 +55,30 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.error-message {
-  height: 20px;
+.error-message,
+.strength-msg {
   margin: 5px;
   font-size: 13px;
+}
+
+.error-message {
+  height: 20px;
+}
+
+.Weak {
+  color: red;
+}
+
+.Fair {
+  color: rgb(255, 200, 0);
+}
+
+.Strong {
+  color: rgb(162, 255, 0);
+}
+
+.VeryStrong {
+  color: rgb(0, 255, 8);
 }
 
 .country-list {
