@@ -19,6 +19,7 @@ function MainPage() {
             <p>E-mail: {data.email}</p>
             <p>Password: {data.password}</p>
             <p>Gender: {data.gender}</p>
+            <p>Country: {data.country}</p>
             <div>
               <p>Uploaded Image:</p>
               <img src={data.image} alt="Uploaded" />
@@ -35,6 +36,7 @@ function MainPage() {
             <p>E-mail: {data2.email}</p>
             <p>Password: {data2.password}</p>
             <p>Gender: {data2.gender}</p>
+            <p>Country: {data2.country}</p>
             <div>
               <p>Uploaded Image:</p>
               <img src={data2.image} alt="Uploaded" />

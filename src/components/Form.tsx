@@ -16,6 +16,7 @@ interface IFormErrors {
   password: string;
   password2: string;
   gender: string;
+  country: string;
   accept: string;
   image: string;
 }
@@ -30,6 +31,7 @@ function Form() {
   const inputRefSex = useRef<HTMLSelectElement>(null);
   const inputRefAccept = useRef<HTMLInputElement>(null);
   const inputRefImg = useRef<HTMLInputElement>(null);
+  const inputRefCountry = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<IFormErrors>({
@@ -39,9 +41,32 @@ function Form() {
     password: '',
     password2: '',
     gender: '',
+    country: '',
     accept: '',
     image: '',
   });
+  const [filteredCountries, setFilteredCountries] = useState(COUNTRIES);
+  const [isSelecting, setIsSelecting] = useState(false);
+
+  const handleChange = () => {
+    if (inputRefCountry.current) {
+      const value = inputRefCountry.current.value;
+      setIsSelecting(true);
+
+      const filtered = COUNTRIES.filter((country) =>
+        country.toLowerCase().startsWith(value.toLowerCase())
+      );
+      setFilteredCountries(filtered);
+    }
+  };
+
+  const handleSelect = (country: string) => {
+    if (inputRefCountry.current) {
+      inputRefCountry.current.value = country;
+    }
+    setIsSelecting(false);
+    setFilteredCountries(COUNTRIES);
+  };
 
   const onSubmit = async () => {
     const formData = {
@@ -51,6 +76,7 @@ function Form() {
       password: inputRefPass.current!.value || '',
       password2: inputRefPass2.current!.value || '',
       gender: inputRefSex.current!.value || '',
+      country: inputRefCountry.current!.value || '',
       accept: inputRefAccept.current!.checked || false,
       image: inputRefImg.current!.files || [],
     };
@@ -61,9 +87,19 @@ function Form() {
       if (formData.image)
         convertedImage = await convertToBase64(formData.image[0]);
       dispatch(setData({ ...formData, image: convertedImage }));
+      setErrors({
+        name: '',
+        age: '',
+        email: '',
+        password: '',
+        password2: '',
+        gender: '',
+        country: '',
+        accept: '',
+        image: '',
+      });
       navigate('/');
     } catch (err) {
-      console.log(err);
       if (err instanceof yup.ValidationError) {
         const errorMsges: IFormErrors = err.inner.reduce(
           (acc, error) => {
@@ -80,6 +116,7 @@ function Form() {
             gender: '',
             accept: '',
             image: '',
+            country: '',
           }
         );
         setErrors(errorMsges);
@@ -97,27 +134,27 @@ function Form() {
         <div>
           <label htmlFor="name">Name: </label>
           <input id="name" type="text" ref={inputRefName}></input>
-          {errors.name && <p>{errors.name}</p>}
+          <p className="error-message">{errors.name || ''}</p>
         </div>
         <div>
           <label htmlFor="age">Age: </label>
           <input id="age" type="number" ref={inputRefAge}></input>
-          {errors.age && <p>{errors.age}</p>}
+          <p className="error-message">{errors.age || ''}</p>
         </div>
         <div>
           <label htmlFor="email">E-mail: </label>
           <input id="email" type="email" ref={inputRefEmail}></input>
-          {errors.email && <p>{errors.email}</p>}
+          <p className="error-message">{errors.email || ''}</p>
         </div>
         <div>
           <label htmlFor="password">Password: </label>
           <input id="password" type="password" ref={inputRefPass}></input>
-          {errors.password && <p>{errors.password}</p>}
+          <p className="error-message">{errors.password || ''}</p>
         </div>
         <div>
           <label htmlFor="password2">Confirm Password: </label>
           <input id="password2" type="password" ref={inputRefPass2}></input>
-          {errors.password2 && <p>{errors.password2}</p>}
+          <p className="error-message">{errors.password2 || ''}</p>
         </div>
         <div>
           <label htmlFor="gender">Gender: </label>
@@ -126,12 +163,36 @@ function Form() {
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
-          {errors.gender && <p>{errors.gender}</p>}
+          <p className="error-message">{errors.gender || ''}</p>
+        </div>
+        <div>
+          <label htmlFor="country">Country: </label>
+          <input
+            id="country"
+            type="text"
+            autoComplete="off"
+            onChange={handleChange}
+            ref={inputRefCountry}
+          />
+          {isSelecting && (
+            <ul className="country-list">
+              {filteredCountries.map((country) => (
+                <li
+                  className="country-list"
+                  key={country}
+                  onClick={() => handleSelect(country)}
+                >
+                  {country}
+                </li>
+              ))}
+            </ul>
+          )}
+          <p className="error-message">{errors.country || ''}</p>
         </div>
         <div>
           <label htmlFor="accept">accept T&C </label>
           <input id="accept" type="checkbox" ref={inputRefAccept}></input>
-          {errors.accept && <p>{errors.accept}</p>}
+          <p className="error-message">{errors.accept || ''}</p>
         </div>
         <div>
           <input
@@ -139,7 +200,7 @@ function Form() {
             ref={inputRefImg}
             accept="image/png, image/jpeg"
           ></input>
-          {errors.image && <p>{errors.image}</p>}
+          <p className="error-message">{errors.image || ''}</p>
         </div>
         <button type="submit">Submit</button>
       </form>

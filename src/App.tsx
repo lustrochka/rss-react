@@ -7,6 +7,7 @@ import {
 import Form from './components/Form';
 import FormWithHook from './components/FormWithHook';
 import MainPage from './components/MainPage';
+import './App.css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

@@ -8,6 +8,7 @@ const initialState = {
     password: '',
     gender: '',
     image: '',
+    country: '',
   },
 };
 
