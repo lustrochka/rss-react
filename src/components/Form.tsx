@@ -1,11 +1,12 @@
 import { useRef } from 'react';
 import { setData } from '../store/slices/Form1Slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { schema } from '../utils/schema';
+import { createSchema } from '../utils/schema';
 import { FormInput } from '../types';
 import convertToBase64 from '../utils/convertToBase64';
+import { RootState } from '../store/store';
 import * as yup from 'yup';
 
 interface IFormErrors {
@@ -20,6 +21,7 @@ interface IFormErrors {
 }
 
 function Form() {
+  const COUNTRIES = useSelector((state: RootState) => state.countries);
   const inputRefName = useRef<HTMLInputElement>(null);
   const inputRefAge = useRef<HTMLInputElement>(null);
   const inputRefEmail = useRef<HTMLInputElement>(null);
@@ -54,7 +56,7 @@ function Form() {
     };
 
     try {
-      await schema.validate(formData, { abortEarly: false });
+      await createSchema(COUNTRIES).validate(formData, { abortEarly: false });
       let convertedImage;
       if (formData.image)
         convertedImage = await convertToBase64(formData.image[0]);

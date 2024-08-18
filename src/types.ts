@@ -7,4 +7,5 @@ export interface FormInput {
   accept: boolean;
   image: FileList;
   gender: string;
+  country: string;
 }

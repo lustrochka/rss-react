@@ -3,11 +3,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { setData2 } from '../store/slices/Form2Slice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { schema } from '../utils/schema';
+import { createSchema } from '../utils/schema';
 import convertToBase64 from '../utils/convertToBase64';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { RootState } from '../store/store';
 import { FormInput } from '../types';
 
 function FormWithHook() {
+  const COUNTRIES = useSelector((state: RootState) => state.countries);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -15,9 +19,28 @@ function FormWithHook() {
     handleSubmit,
     formState: { isValid, errors },
   } = useForm<FormInput>({
-    resolver: yupResolver<FormInput>(schema),
+    resolver: yupResolver<FormInput>(createSchema(COUNTRIES)),
     mode: 'onChange',
   });
+  const [countryInput, setCountryInput] = useState('');
+  const [filteredCountries, setFilteredCountries] = useState(COUNTRIES);
+  const [isSelecting, setIsSelecting] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCountryInput(e.target.value);
+    setIsSelecting(true);
+
+    const filtered = COUNTRIES.filter((country) =>
+      country.toLowerCase().startsWith(e.target.value.toLowerCase())
+    );
+    setFilteredCountries(filtered);
+  };
+
+  const handleSelect = (country: string) => {
+    setCountryInput(country);
+    setIsSelecting(false);
+    setFilteredCountries(COUNTRIES);
+  };
 
   async function onSubmit(data: FormInput) {
     const convertedImage = await convertToBase64(data.image[0]);
@@ -60,6 +83,28 @@ function FormWithHook() {
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
+        </div>
+        <div>
+          <label htmlFor="country">Country: </label>
+          <input
+            {...register('country')}
+            id="country"
+            type="text"
+            value={countryInput}
+            autoComplete="off"
+            onChange={handleChange}
+          />
+          {isSelecting && (
+            <li>
+              {filteredCountries.map((country) => (
+                <ul key={country} onClick={() => handleSelect(country)}>
+                  {country}
+                </ul>
+              ))}
+            </li>
+          )}
+          {JSON.stringify(errors)}
+          {errors.country && <p>{errors.country.message}</p>}
         </div>
 
         <div>
