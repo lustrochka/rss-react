@@ -170,7 +170,7 @@ function Form() {
           <input
             id="country"
             type="text"
-            autoComplete="off"
+            autoComplete="nope"
             onChange={handleChange}
             ref={inputRefCountry}
           />

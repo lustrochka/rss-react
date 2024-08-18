@@ -18,6 +18,7 @@ function FormWithHook() {
     register,
     handleSubmit,
     formState: { isValid, errors },
+    setValue,
   } = useForm<FormInput>({
     resolver: yupResolver<FormInput>(createSchema(COUNTRIES)),
     mode: 'onChange',
@@ -34,12 +35,17 @@ function FormWithHook() {
       country.toLowerCase().startsWith(e.target.value.toLowerCase())
     );
     setFilteredCountries(filtered);
+    setValue('country', e.target.value, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
 
   const handleSelect = (country: string) => {
     setCountryInput(country);
     setIsSelecting(false);
     setFilteredCountries(COUNTRIES);
+    setValue('country', country, { shouldValidate: true, shouldDirty: true });
   };
 
   async function onSubmit(data: FormInput) {
@@ -104,7 +110,7 @@ function FormWithHook() {
             id="country"
             type="text"
             value={countryInput}
-            autoComplete="off"
+            autoComplete="nope"
             onChange={handleChange}
           />
           {isSelecting && (
