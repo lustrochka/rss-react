@@ -19,6 +19,10 @@ function MainPage() {
             <p>E-mail: {data.email}</p>
             <p>Password: {data.password}</p>
             <p>Gender: {data.gender}</p>
+            <div>
+              <p>Uploaded Image:</p>
+              <img src={data.image} alt="Uploaded" />
+            </div>
           </div>
         )}
       </div>
