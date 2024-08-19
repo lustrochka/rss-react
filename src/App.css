@@ -1,0 +1,7 @@
+.main-page {
+  display: flex;
+}
+
+.form:first-child {
+  margin-right: 50px;
+}
